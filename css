@@ -1,0 +1,15 @@
+#title {
+    text-align: center; 
+    color: #00b4d8 !important; 
+    font-size: 32px; 
+    font-weight: 900; 
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px #00b4d8, 0 0 20px #0077b6;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
