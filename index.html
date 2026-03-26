@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UNIT | AI Interface</title>
+    <title>UNIT | Neural Interface</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
         :root {
             --primary: #00b4d8;
-            --bg: #050505; 
+            --bg: #0d0d0d;
             --sidebar: #000000;
-            --text: #ffffff;
+            --header-h: 60px; /* Высота верхней панели */
         }
 
         body, html {
@@ -20,119 +20,113 @@
             height: 100vh;
             width: 100vw;
             background-color: var(--bg);
-            color: var(--text);
+            color: #ffffff;
             font-family: 'Inter', sans-serif;
             display: flex;
-            overflow: hidden; /* Критично: убираем скролл самого сайта */
+            overflow: hidden;
         }
 
-        /* Сайдбар в стиле GPT */
+        /* Сайдбар */
         .sidebar {
-            width: 260px;
-            min-width: 260px;
+            width: 240px;
             background-color: var(--sidebar);
             display: flex;
             flex-direction: column;
             padding: 20px;
-            border-right: 1px solid #202020;
-            z-index: 100;
+            border-right: 1px solid #252525;
+            z-index: 10;
         }
 
-        .logo-box {
-            padding: 10px 0 30px 0;
-            text-align: center;
+        /* Верхняя панель (чтобы название не мешало кнопкам чата) */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 5;
         }
 
         .logo-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--primary);
             letter-spacing: 3px;
             font-weight: 900;
+            margin-right: 20px;
         }
 
-        /* Главная область чата */
-        .chat-wrapper {
+        /* Основная область */
+        .content-area {
             flex: 1;
-            height: 100vh;
             position: relative;
-            background: #000;
+            height: 100vh;
         }
 
-        /* Тот самый "Масштабный" Iframe */
-        iframe {
+        /* Фрейм чата */
+        .iframe-container {
             position: absolute;
-            top: 0;
+            top: 0; /* Чат начинается под топ-баром визуально, но фрейм на весь экран */
             left: 0;
             width: 100%;
             height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            display: block;
+            /* Сдвигаем контент чата чуть ниже, чтобы кнопки Gradio (справа сверху) 
+               не перекрывались нашим заголовком, если они там есть */
+            padding-top: var(--header-h); 
         }
 
-        /* Контакты внизу */
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid #202020;
-        }
-
-        .btn-contact {
+        /* Контакты */
+        .nav-bottom { margin-top: auto; border-top: 1px solid #252525; padding-top: 15px; }
+        .social-link {
             display: block;
             text-decoration: none;
-            color: #8e8e8e;
-            padding: 12px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            color: #888;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
             transition: 0.2s;
-            background: #171717;
         }
+        .social-link:hover { background: #1a1a1a; color: var(--primary); }
 
-        .btn-contact:hover {
-            background: #252525;
-            color: var(--primary);
-        }
-
-        .status-tag {
-            font-size: 0.65rem;
-            color: #10a37f;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-dot { width: 6px; height: 6px; background: #10a37f; border-radius: 50%; box-shadow: 0 0 5px #10a37f; }
-
-        /* Для мобильных устройств */
         @media (max-width: 768px) {
-            .sidebar { display: none; } /* Скрываем боковую панель на телефонах для максимума чата */
+            .sidebar { display: none; }
         }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <div class="logo-box">
-            <div class="logo-text">UNIT</div>
-            <div style="font-size: 0.6rem; opacity: 0.4; margin-top: 4px;">NEURAL CORE PRO</div>
+        <div style="font-size: 0.7rem; color: var(--primary); margin-bottom: 20px;">SYSTEM: ONLINE</div>
+        
+        <div class="nav-bottom">
+            <div style="font-size: 10px; opacity: 0.4; margin-bottom: 10px;">DEVELOPER</div>
+            <a href="https://t.me/aktan2011" target="_blank" class="social-link">Telegram</a>
+            <a href="https://wa.me/996995001062" target="_blank" class="social-link">WhatsApp</a>
         </div>
-
-        <div class="status-tag"><span class="status-dot"></span> System Active</div>
-
-        <nav class="nav-footer">
-            <div style="font-size: 0.65rem; opacity: 0.4; margin-bottom: 10px;">СВЯЗЬ С DEVELOPER</div>
-            <a href="https://t.me/aktan2011" target="_blank" class="btn-contact">Telegram</a>
-            <a href="https://wa.me/996995001062" target="_blank" class="btn-contact">WhatsApp</a>
-            <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 15px; text-align: center;">UNIT v2.0 | Aktan</div>
-        </nav>
     </aside>
 
-    <main class="chat-wrapper">
-        <iframe src="https://aktan27-ai-portfolio.hf.space/?__theme=dark"></iframe>
+    <main class="content-area">
+        <div class="top-bar">
+            <div class="logo-text">UNIT</div>
+            <div style="font-size: 0.6rem; opacity: 0.4;">V2.0 NEURAL INTERFACE</div>
+        </div>
+
+        <div class="iframe-container">
+            <iframe src="https://aktan27-ai-portfolio.hf.space/?__theme=dark"></iframe>
+        </div>
     </main>
 
 </body>
